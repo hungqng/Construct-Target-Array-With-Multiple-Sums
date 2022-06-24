@@ -22,3 +22,21 @@ class Solution:
             total += a
             heapq.heappush(target, -a)
 
+        # Solution 2
+        if len(target) == sum(target): return True
+        if len(target) == 1: return False
+        h = [-n for n in target]
+        total = sum(target)
+        heapify(h)
+        while total != len(target):
+            # print(h)
+            cand = -heappop(h)
+            rest = total - cand
+            new = cand - rest
+            if new <=0: return False
+            if new > rest:
+                new = new%rest + rest
+            heappush(h,-new)
+            total = new + rest
+        return True
+
